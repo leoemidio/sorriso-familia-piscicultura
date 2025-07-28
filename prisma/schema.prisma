@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Tanque {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  capacidade Int
+  lotes      Lote[]
+}
+
+model Lote {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  tanqueId    Int
+  tanque      Tanque   @relation(fields: [tanqueId], references: [id])
+  dataInicio  DateTime
+  peixes      Peixe[]
+  alimentacoes Alimentacao[]
+  mortalidades Mortalidade[]
+  abates      Abate[]
+}
+
+model Peixe {
+  id         Int      @id @default(autoincrement())
+  loteId     Int
+  lote       Lote     @relation(fields: [loteId], references: [id])
+  peso       Float
+  dataPesagem DateTime
+}
+
+model Alimentacao {
+  id         Int      @id @default(autoincrement())
+  loteId     Int
+  lote       Lote     @relation(fields: [loteId], references: [id])
+  data       DateTime
+  racaoTipo  String
+  quantidade Float
+}
+
+model Mortalidade {
+  id         Int      @id @default(autoincrement())
+  loteId     Int
+  lote       Lote     @relation(fields: [loteId], references: [id])
+  data       DateTime
+  quantidade Int
+  motivo     String
+}
+
+model Abate {
+  id         Int      @id @default(autoincrement())
+  loteId     Int
+  lote       Lote     @relation(fields: [loteId], references: [id])
+  data       DateTime
+  quantidade Int
+  tipo       String  // inteiro ou filé
+}
+
+model Venda {
+  id          Int      @id @default(autoincrement())
+  data        DateTime
+  tipo        String   // inteiro ou filé
+  quantidade  Int
+  precoUnit   Float
+  cliente     String
+}
