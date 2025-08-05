@@ -1,5 +1,18 @@
-node_modules
-# Keep environment variables out of version control
+# Dependências do Node
+node_modules/
+
+# Variáveis de ambiente
 .env
 
+# Banco SQLite local
+bancoPsicultura.db
+
+# Arquivos de log
+*.log
+
+# Artefatos gerados pelo Prisma
 /generated/prisma
+
+# (Opcional) Arquivos do macOS
+.DS_Store
+
